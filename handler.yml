@@ -1,0 +1,14 @@
+- name: Idempotence Using Handler
+  hosts: slave2
+  tasks:
+  - name: Copy httpd.conf
+    copy:
+            src: /root/task11.3/httpd.conf
+            dest: /etc/httpd/conf/httpd.conf
+    notify: Restart httpd
+  handlers:
+  - name: Restart httpd
+    service:
+            name: httpd
+            state: restarted
+

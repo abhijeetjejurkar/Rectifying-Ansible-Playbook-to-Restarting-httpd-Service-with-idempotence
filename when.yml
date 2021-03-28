@@ -1,0 +1,15 @@
+- name: Idempotence Using When Keyword
+  hosts: slave1
+  tasks:
+  - name: Copy Apache httpd.conf
+    copy:
+            src: /root/task11.3/httpd.conf
+            dest: /etc/httpd/conf/httpd.conf
+    register: status
+
+  - name: Restart httpd
+    service:
+            name: httpd
+            state: restarted
+    when: status.changed
+  
